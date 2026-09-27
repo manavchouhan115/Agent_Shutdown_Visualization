@@ -1,0 +1,18 @@
+{
+  "name": "agent-incident-simulation",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "test": "node --test \"src/**/*.test.ts\"",
+    "check:content": "node scripts/check-content.js",
+    "check:contrast": "node scripts/check-contrast.js",
+    "build": "npm run check:content && npm run check:contrast && npm test && tsc --noEmit && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "typescript": "^7.0.2",
+    "vite": "^8.3.1"
+  }
+}

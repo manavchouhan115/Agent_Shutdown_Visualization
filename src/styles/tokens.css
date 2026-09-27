@@ -1,0 +1,44 @@
+/*
+  Design tokens: the ONLY place colours are defined (see CLAUDE.md).
+  Everything else uses these variables, e.g. color: var(--color-ink).
+*/
+:root {
+  color-scheme: light;
+
+  /* Meaning colours — each has one meaning only. */
+  --color-teal: #0b7570;        /* normal / legitimate */
+  --color-red: #b3261e;         /* compromised / harmful */
+  --color-grey: #7e868e;        /* infrastructure / neutral (shapes) */
+  --color-grey-light: #dfe3e6;  /* infrastructure fills */
+  --color-flood: #b9cddd;       /* flood water, background only */
+  --color-river: #9db8cc;       /* the river: same muted blue family, a shade deeper */
+
+  /* Map ground (neutral, carries no meaning). */
+  --color-land: #ecebe5;
+  --color-road: #dcdad3;
+  --color-building: #ffffff;    /* building walls; outlines use --color-grey */
+
+  /* Interface colours (neutral, carry no meaning). */
+  --color-paper: #f5f4f0;       /* page background */
+  --color-surface: #ffffff;     /* bars and cards */
+  --color-ink: #1b2430;         /* main text, primary buttons */
+  --color-ink-muted: #505a66;   /* secondary text (7:1 on white) */
+  --color-line: #d3d7db;        /* decorative borders only (too pale for controls) */
+  --color-control: #7e868e;     /* controls that must be seen: switch track, progress dots */
+  --color-focus: #1b2430;       /* keyboard focus ring */
+
+  /* Type */
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-code: ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace;
+
+  /* Spacing scale */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+
+  /* Sizes */
+  --radius: 0.5rem;
+  --tap-min: 44px;              /* minimum tap target (CLAUDE.md) */
+}

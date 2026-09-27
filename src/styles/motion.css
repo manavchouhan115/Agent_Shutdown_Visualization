@@ -1,0 +1,181 @@
+/*
+  Motion. Everything that moves is defined here, with a calmer version
+  for visitors who ask their device for reduced motion (CLAUDE.md).
+*/
+
+/* Technical panel slides in from the right when switched on. */
+.tech-panel {
+  transition:
+    transform 250ms ease-out,
+    opacity 250ms ease-out;
+}
+
+@starting-style {
+  .tech-panel {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+/* On phones the sheet rises from the bottom instead. */
+@media (max-width: 40rem) and (orientation: portrait) {
+  @starting-style {
+    .tech-panel {
+      transform: translateY(100%);
+    }
+  }
+}
+
+/* Reduced motion: no sliding, just a quick fade. */
+@media (prefers-reduced-motion: reduce) {
+  @starting-style {
+    .tech-panel {
+      transform: none;
+    }
+  }
+}
+
+/* Idle hint: the thing to do pulses gently. */
+@keyframes ring-pulse {
+  50% {
+    stroke-width: 7;
+  }
+}
+
+@keyframes button-pulse {
+  50% {
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--color-ink) 25%, transparent);
+  }
+}
+
+.is-hinting .target-ring {
+  stroke-dasharray: none;
+  stroke-width: 3.5;
+  animation: ring-pulse 1.2s ease-in-out infinite;
+}
+
+.button.is-hinting {
+  animation: button-pulse 1.2s ease-in-out infinite;
+}
+
+/* Reduced motion: no pulsing; the ring and button are simply outlined more strongly. */
+@media (prefers-reduced-motion: reduce) {
+  .is-hinting .target-ring {
+    animation: none;
+    stroke-width: 5;
+  }
+
+  .button.is-hinting {
+    animation: none;
+    outline: 3px solid var(--color-ink);
+    outline-offset: 3px;
+  }
+}
+
+/* ---------- Animated parts of scenes (see src/animations) ---------- */
+
+/* SVG parts scale and turn around their own centre, not the corner of the drawing. */
+[data-part],
+.fig-keys-mount {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* Keys swing from where they hang on the belt. */
+.fig-keys-mount {
+  transform-origin: top left;
+}
+
+/* ---------- Weather (landing screen and Step 1) ---------- */
+
+.rain {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* A sheet is twice the scene's height and slides down by half of itself, then repeats. */
+.rain__sheet {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 200%;
+  animation: rain-fall 1s linear infinite;
+  will-change: transform;
+}
+
+/* The second sheet falls a little slower and fainter, so the rain doesn't look like one block. */
+.rain__sheet--far {
+  animation-duration: 1.45s;
+  opacity: 0.6;
+}
+
+.rain__sheet i {
+  position: absolute;
+  width: 1.5px;
+  height: 16px;
+  border-radius: 1px;
+  background: var(--color-grey);
+  opacity: 0.4;
+  transform: rotate(12deg);
+}
+
+@keyframes rain-fall {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(50%);
+  }
+}
+
+/* The flood water slowly rises and falls. */
+.map.is-flooding .map-flood {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: flood-rise 6s ease-in-out infinite alternate;
+}
+
+@keyframes flood-rise {
+  from {
+    transform: scale(0.96);
+    opacity: 0.5;
+  }
+  to {
+    transform: scale(1.05);
+    opacity: 0.7;
+  }
+}
+
+/* Reduced motion: no rain, no rising water. */
+@media (prefers-reduced-motion: reduce) {
+  .rain {
+    display: none;
+  }
+
+  .map.is-flooding .map-flood {
+    animation: none;
+  }
+}
+
+/* ---------- Turning red (Step 9) ---------- */
+
+/* When an agent or helper is compromised, it changes colour smoothly rather than snapping. */
+.fig-agent {
+  transition: color 0.6s ease;
+}
+
+.webpage__body .webpage__hidden {
+  transition:
+    color 0.4s ease,
+    border-color 0.4s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fig-agent,
+  .webpage__body .webpage__hidden {
+    transition: none;
+  }
+}
